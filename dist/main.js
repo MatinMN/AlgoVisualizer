@@ -1,6 +1,7 @@
 let isSorting = false;
 
 let sleep = milliSeconds => {
+  console.log('sleeping for ' + milliSeconds);
   return new Promise(resolve => setTimeout(resolve, milliSeconds));
 };
 
@@ -33,6 +34,24 @@ let getAllElements = () => {
   return document.querySelectorAll('.bar');
 };
 
+async function insertionSort() {
+  isSorting = true;
+  console.log('after 10 seconds');
+  let allElements = getAllElements();
+  for (let i = 1; i < allElements.length; i++) {
+    let key = parseInt(allElements[i].style.height.split('px')[0]);
+    allElements[i].style.backgroundColor = 'red';
+    let j = i - 1;
+    while (j >= 0 && parseInt(allElements[j].style.height.split('px')[0]) > key) {
+      await sleep(5);
+      allElements[j + 1].style.height = allElements[j].style.height;
+      j = j - 1;
+    }
+    allElements[j + 1].style.height = key + "px";
+    allElements[i].style.backgroundColor = 'purple';
+  }
+  isSorting = false;
+};
 
 async function bubbleSort() {
   isSorting = true;
@@ -80,12 +99,25 @@ let createElements = (elementsNumber) => {
   }
 };
 
-let addEventListeners = () => {
+let addBubbleSortButtonListener = () => {
   let bubbleSortButton = document.querySelector('.bubble-sort');
-  bubbleSortButton.addEventListener('click', (e) => {
+  bubbleSortButton.addEventListener('click', e => {
     console.log('bubble sort');
     if (!isSorting) bubbleSort();
   });
+};
+
+let addInsertionSortButtonListener = () => {
+  let insertionSortButton = document.querySelector('.insertion-sort');
+  insertionSortButton.addEventListener('click', e => {
+    console.log('insertion sort');
+    if (!isSorting) insertionSort();
+  });
+};
+
+let addEventListeners = () => {
+  addBubbleSortButtonListener();
+  addInsertionSortButtonListener();
 };
 
 window.addEventListener('load', () => {
