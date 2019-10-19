@@ -36,7 +36,6 @@ let getAllElements = () => {
 
 async function insertionSort() {
   isSorting = true;
-  console.log('after 10 seconds');
   let allElements = getAllElements();
   for (let i = 1; i < allElements.length; i++) {
     let key = parseInt(allElements[i].style.height.split('px')[0]);
@@ -46,6 +45,9 @@ async function insertionSort() {
       await sleep(5);
       allElements[j + 1].style.height = allElements[j].style.height;
       j = j - 1;
+      allElements[j+1].style.backgroundColor = 'pink';
+      await sleep(5);
+      allElements[j+1].style.backgroundColor = 'purple';
     }
     allElements[j + 1].style.height = key + "px";
     allElements[i].style.backgroundColor = 'purple';
