@@ -34,6 +34,27 @@ let getAllElements = () => {
   return document.querySelectorAll('.bar');
 };
 
+async function selectionSort() {
+  let allElements = getAllElements();
+  for (let i = 0; i < allElements.length - 1; i++) {
+    let minimum = i;
+    for (let j = i + 1; j < allElements.length; j++) {
+      allElements[j].style.backgroundColor = 'pink';
+      await sleep(5);
+      if (parseInt(allElements[j].style.height.split('px')[0]) < parseInt(allElements[minimum].style.height.split('px')[0])) {
+        minimum = j;
+      }
+      allElements[j].style.backgroundColor = 'purple';
+    }
+    let temp = parseInt(allElements[minimum].style.height.split('px')[0]) + "px";
+    allElements[minimum].style.height = parseInt(allElements[i].style.height.split('px')[0]) + "px";
+    allElements[i].style.height = temp;
+    allElements[i].style.backgroundColor = 'green';
+    if (i == allElements.length - 2) allElements[i + 1].style.backgroundColor = 'green';
+    await sleep(5);
+  }
+};
+
 async function insertionSort() {
   isSorting = true;
   let allElements = getAllElements();
@@ -101,6 +122,25 @@ let createElements = (elementsNumber) => {
   }
 };
 
+let addGenerateNewArrayButtonListener = () => {
+  let generateNewArrayButton = document.querySelector('.generate-new-array');
+  generateNewArrayButton.addEventListener('click', e => {
+    if (!isSorting) {
+
+      document.querySelector('.all-bars-wrapper').innerHTML = '';
+      createElements(50);
+    }
+  });
+};
+
+let addSelectionSortButtonListener = () => {
+  let selectionSortButton = document.querySelector('.selection-sort');
+  selectionSortButton.addEventListener('click', e => {
+    console.log('selection-sort');
+    if (!isSorting) selectionSort();
+  });
+};
+
 let addBubbleSortButtonListener = () => {
   let bubbleSortButton = document.querySelector('.bubble-sort');
   bubbleSortButton.addEventListener('click', e => {
@@ -118,11 +158,13 @@ let addInsertionSortButtonListener = () => {
 };
 
 let addEventListeners = () => {
+  addGenerateNewArrayButtonListener();
   addBubbleSortButtonListener();
   addInsertionSortButtonListener();
+  addSelectionSortButtonListener();
 };
 
 window.addEventListener('load', () => {
-  createElements(70);
+  createElements(50);
   addEventListeners();
 });
