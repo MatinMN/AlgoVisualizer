@@ -1,6 +1,7 @@
 let isSorting = false;
 
 let sleep = milliSeconds => {
+  console.log('sleeping for ' + milliSeconds);
   return new Promise(resolve => setTimeout(resolve, milliSeconds));
 };
 
@@ -33,6 +34,47 @@ let getAllElements = () => {
   return document.querySelectorAll('.bar');
 };
 
+async function selectionSort() {
+  let allElements = getAllElements();
+  for (let i = 0; i < allElements.length - 1; i++) {
+    let minimum = i;
+    for (let j = i + 1; j < allElements.length; j++) {
+      allElements[j].style.backgroundColor = 'pink';
+      await sleep(5);
+      if (parseInt(allElements[j].style.height.split('px')[0]) < parseInt(allElements[minimum].style.height.split('px')[0])) {
+        minimum = j;
+      }
+      allElements[j].style.backgroundColor = 'purple';
+    }
+    let temp = parseInt(allElements[minimum].style.height.split('px')[0]) + "px";
+    allElements[minimum].style.height = parseInt(allElements[i].style.height.split('px')[0]) + "px";
+    allElements[i].style.height = temp;
+    allElements[i].style.backgroundColor = 'green';
+    if (i == allElements.length - 2) allElements[i + 1].style.backgroundColor = 'green';
+    await sleep(5);
+  }
+};
+
+async function insertionSort() {
+  isSorting = true;
+  let allElements = getAllElements();
+  for (let i = 1; i < allElements.length; i++) {
+    let key = parseInt(allElements[i].style.height.split('px')[0]);
+    allElements[i].style.backgroundColor = 'red';
+    let j = i - 1;
+    while (j >= 0 && parseInt(allElements[j].style.height.split('px')[0]) > key) {
+      await sleep(5);
+      allElements[j + 1].style.height = allElements[j].style.height;
+      j = j - 1;
+      allElements[j+1].style.backgroundColor = 'pink';
+      await sleep(5);
+      allElements[j+1].style.backgroundColor = 'purple';
+    }
+    allElements[j + 1].style.height = key + "px";
+    allElements[i].style.backgroundColor = 'purple';
+  }
+  isSorting = false;
+};
 
 async function bubbleSort() {
   isSorting = true;
@@ -80,15 +122,49 @@ let createElements = (elementsNumber) => {
   }
 };
 
-let addEventListeners = () => {
+let addGenerateNewArrayButtonListener = () => {
+  let generateNewArrayButton = document.querySelector('.generate-new-array');
+  generateNewArrayButton.addEventListener('click', e => {
+    if (!isSorting) {
+
+      document.querySelector('.all-bars-wrapper').innerHTML = '';
+      createElements(50);
+    }
+  });
+};
+
+let addSelectionSortButtonListener = () => {
+  let selectionSortButton = document.querySelector('.selection-sort');
+  selectionSortButton.addEventListener('click', e => {
+    console.log('selection-sort');
+    if (!isSorting) selectionSort();
+  });
+};
+
+let addBubbleSortButtonListener = () => {
   let bubbleSortButton = document.querySelector('.bubble-sort');
-  bubbleSortButton.addEventListener('click', (e) => {
+  bubbleSortButton.addEventListener('click', e => {
     console.log('bubble sort');
     if (!isSorting) bubbleSort();
   });
 };
 
+let addInsertionSortButtonListener = () => {
+  let insertionSortButton = document.querySelector('.insertion-sort');
+  insertionSortButton.addEventListener('click', e => {
+    console.log('insertion sort');
+    if (!isSorting) insertionSort();
+  });
+};
+
+let addEventListeners = () => {
+  addGenerateNewArrayButtonListener();
+  addBubbleSortButtonListener();
+  addInsertionSortButtonListener();
+  addSelectionSortButtonListener();
+};
+
 window.addEventListener('load', () => {
-  createElements(70);
+  createElements(50);
   addEventListeners();
 });
