@@ -1,32 +1,32 @@
 let sleep = milliSeconds => {
-    //console.log('sleeping for ' + milliSeconds);
+    console.log('sleeping for ' + milliSeconds);
     return new Promise(resolve => setTimeout(resolve, milliSeconds));
-  };
-  
-  let addCSSClass = (element, className) => {
+};
+
+let addCSSClass = (element, className) => {
     element.classList.add(className);
-  };
-  
-  let createDivElement = () => {
+};
+
+let createDivElement = () => {
     return document.createElement('DIV');
-  };
-  
-  let getRandomHeight = (min = 0,max = 100) => {
+};
+
+let getRandomHeight = (min = 0,max = 100) => {
     return `${min + Math.floor(Math.random() * (max-min))}px`;
-  };
-  
-  let setElementHeight = (element) => {
+};
+
+let setElementHeight = (element) => {
     return element.style.height = getRandomHeight();
-  };
-  
-  let getElementHeight = (element) => {
+};
+
+let getElementHeight = (element) => {
     return element.style.height;
-  };
-  
-  let appendDivToParentElement = (parentElement, elementToAppend) => {
+};
+
+let appendDivToParentElement = (parentElement, elementToAppend) => {
     return parentElement.appendChild(elementToAppend);
-  };
-  
-  let getAllElements = () => {
+};
+
+let getAllElements = () => {
     return document.querySelectorAll('.bar');
-  };
+};

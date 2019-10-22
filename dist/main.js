@@ -1,21 +1,16 @@
-let isSorting = false;
-
-async function selectionSort() {
+function selectionSort() {
   let selectionSort = new SelectionSort();
   selectionSort.sort();
-  isSorting = false;
 };
 
-async function insertionSort() {
+function insertionSort() {
   let insertionSort = new InsertionSort();
   insertionSort.sort();
-  isSorting = false;
 };
 
-async function bubbleSort() {
+function bubbleSort() {
   let bubbleSort = new BubbleSort();
   bubbleSort.sort();
-  isSorting = false;
 };
 
 let createElements = (elementsNumber = 50) => {

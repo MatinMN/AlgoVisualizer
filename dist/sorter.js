@@ -1,3 +1,5 @@
+var isSorting = false;
+
 class Sorter{
     constructor(){
         this.sorting = false;
@@ -44,6 +46,7 @@ class BubbleSort extends Sorter{
             else sorted = 0;
         }
         this.sorting = false;
+        isSorting = false;
     }
 
 }
@@ -69,9 +72,9 @@ class InsertionSort extends Sorter{
           allElements[i].style.backgroundColor = 'purple';
         }
         this.sorting = false;
+        isSorting = false;
     }
 }
-
 
 class SelectionSort extends Sorter{
 
@@ -96,5 +99,6 @@ class SelectionSort extends Sorter{
           await sleep(5);
         } 
         this.sorting = false;
+        isSorting = false;
     }
 }
