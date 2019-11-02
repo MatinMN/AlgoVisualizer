@@ -20,7 +20,7 @@ let createElements = (elementsNumber = 50) => {
     let bar = createDivElement();
     addCSSClass(barWrapper, 'bar-wrapper');
     addCSSClass(bar, 'bar');
-    setElementHeight(bar);
+    setRandomHeight(bar);
     appendDivToParentElement(barWrapper, bar);
     appendDivToParentElement(mainElement, barWrapper);
   }
